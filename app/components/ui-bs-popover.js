@@ -46,6 +46,17 @@ export default Ember.Component.extend({
 			var options = this.get('options');
 			try {
 				this.$().popover(options);
+
+				this.addObserver('showPopover', this, function(){
+					var show = this.get('showPopover');
+					if (show) {
+						this.$().popover('show');
+					} 
+					else{
+						this.$().popover('hide');
+					}
+				});
+
 			} catch (e) {
 				console.warn('Couldn\'t initialise popover. Check and make sure that Bootstrap and the popover JS are included in your Brocfile. Error encountered: %o', e);
 			}			
@@ -56,14 +67,14 @@ export default Ember.Component.extend({
 	}),
 
 	// Show on attribute popover change
-	show: Ember.observes('showPopover', function(){
-		var show = this.get('showPopover');
-		if (show) {
-			this.$().popover('show');
-		} 
-		else{
-			this.$().popover('hide');
-		}
+	// show: Ember.observer('showPopover', function(){
+	// 	var show = this.get('showPopover');
+	// 	if (show) {
+	// 		this.$().popover('show');
+	// 	} 
+	// 	else{
+	// 		this.$().popover('hide');
+	// 	}
 		
-	})
+	// })
 });
