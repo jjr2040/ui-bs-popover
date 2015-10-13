@@ -5,6 +5,7 @@ export default Ember.Component.extend({
 	tagName: 'span',
 	classNames: ['ui-bs-popover'],
 	attributeBindings: ['popoverStyles:style'],
+	showPopover: false,
 	// Content
 	content: null,
 	message: null,
@@ -52,5 +53,17 @@ export default Ember.Component.extend({
 	}),
 	_cleanUp: Ember.on('willDestroyElement', function() {
 		this.$().popover('destroy');
+	}),
+
+	// Show on attribute popover change
+	show: Ember.observes('showPopover', function(){
+		var show = this.get('showPopover');
+		if (show) {
+			this.$().popover('show');
+		} 
+		else{
+			this.$().popover('hide');
+		}
+		
 	})
 });
